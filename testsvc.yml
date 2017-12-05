@@ -5,6 +5,6 @@
     - name: Checks Ansible System
       setup: filter=ansible_system
       register: system_type
-    - debug: msg="System Type of this machine is {{ system_type }}
+    - debug: var=system_type
   roles:
     - { role: linux_testsvc, when: "ansible_system == 'Linux'" }
