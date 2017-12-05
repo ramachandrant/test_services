@@ -7,5 +7,5 @@
       register: system_type
     - debug: var=system_type
   roles:
-    - { role: linux_appsvc, when: "ansible_system == 'Linux'" }
-    - { role: aix_appsvc, when: "ansible_system == 'AIX'"}
+    - { role: linux_testsvc, when: "ansible_system == 'Linux'" }
+    - { role: aix_testsvc, when: "ansible_system == 'AIX'"}
