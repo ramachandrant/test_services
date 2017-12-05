@@ -1,0 +1,4 @@
+- name: HTTP Service status check
+  command: systemctl status httpd
+  register: result
+- debug: var=result

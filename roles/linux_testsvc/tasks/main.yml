@@ -18,17 +18,16 @@
   register: system_uptime
 - debug: var=system_uptime
 
-- name: appsvc_off file
-  stat: path={{ appsvc_off_file_path }}
-  register: off_file_path
+- name: HTTP Service status check
+  command: systemctl status httpd
+  ignore_errors: yes
+  register: result
 
-- debug:
-    msg: " {{ appsvc_off_file_path }} is not present and program will exit"
-  when: off_file_path.stat.exists == False
+- name: Stop httpd services Request
+  command: echo " HTTPD Service is going to be stopped"
+  notify: StopServices
+  when: result|succeeded
 
-- name: Services Start Request
-  command: echo "{{ appsvc_off_file_path }} file is present"
-  register: file_status_echo
-  #notify: StartServices
-  when: off_file_path.stat.exists
-- debug: var=file_status_echo
+- name: Start httpd services Request
+  command: echo " HTTPD Service is going to be started"
+  notify: StartServices

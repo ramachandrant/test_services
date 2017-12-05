@@ -1,6 +1,13 @@
+- name: StopServices
+  service:
+      name: httpd
+      state: stopped
+  become: true
+  become_method: sudo
+
 - name: StartServices
-  service: name={{ item }} state=started
-  with_items:
-      - writesrv
-      - qdaemon
-      - lpd
+  service:
+     name: httpd
+     state: started
+  become: true
+  become_method: sudo
