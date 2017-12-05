@@ -1,0 +1,11 @@
+--- #Master Playbook for AppServices
+- hosts: controller
+  user: test
+  pre_tasks:
+    - name: gathering facts
+      setup: filter=ansible_system
+      register: system_type
+    - debug: var=system_type
+  roles:
+    - { role: linux_appsvc, when: "ansible_system == 'Linux'" }
+    - { role: aix_appsvc, when: "ansible_system == 'AIX'"}
