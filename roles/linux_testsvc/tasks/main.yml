@@ -29,6 +29,6 @@
 - name: Services Start Request
   command: echo "{{ appsvc_off_file_path }} file is present"
   register: file_status_echo
-  notify: StartServices
+  #notify: StartServices
   when: off_file_path.stat.exists
 - debug: var=file_status_echo
