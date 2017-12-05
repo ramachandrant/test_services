@@ -1,0 +1,34 @@
+- name: System host name
+  setup: filter=ansible_hostname
+  register: system_hostname
+- debug: var=system_hostname
+
+- name: System IP Information
+  setup: filter=ansible_all_ipv4_addresses
+  register: system_ip
+- debug: var=system_ip
+
+- name: System not root process count
+  shell: ps -ef | awk '{if ( $1 != "root" ) { print }}' | sed '1 d' | wc -l
+  register: system_nonroot_process_count
+- debug: var=system_nonroot_process_count
+
+- name: System Uptime
+  shell: uptime
+  register: system_uptime
+- debug: var=system_uptime
+
+- name: appsvc_off file
+  stat: path={{ appsvc_off_file_path }}
+  register: off_file_path
+
+- debug:
+    msg: " {{ appsvc_off_file_path }} is not present and program will exit"
+  when: off_file_path.stat.exists == False
+
+- name: Services Start Request
+  command: echo "{{ appsvc_off_file_path }} file is present"
+  register: file_status_echo
+  notify: StartServices
+  when: off_file_path.stat.exists
+- debug: var=file_status_echo

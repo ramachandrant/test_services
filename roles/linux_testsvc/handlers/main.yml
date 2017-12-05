@@ -1,0 +1,6 @@
+- name: StartServices
+  service: name={{ item }} state=started
+  with_items:
+      - writesrv
+      - qdaemon
+      - lpd
