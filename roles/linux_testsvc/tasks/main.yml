@@ -8,6 +8,11 @@
   register: system_ip
 - debug: var=system_ip
 
+- name: System not root process
+  shell: ps -ef | awk '{if ( $1 != "root" ) { print }}'
+  register: system_nonroot_processes
+- debug: var=system_nonroot_processes
+
 - name: System not root process count
   shell: ps -ef | awk '{if ( $1 != "root" ) { print }}' | sed '1 d' | wc -l
   register: system_nonroot_process_count
